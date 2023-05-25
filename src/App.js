@@ -3,23 +3,30 @@ import NavBar from "./componentes/NavBar";
 import Footer from "./componentes/footer";
 import ItemListContainer from "./componentes/ItemListContainerFolder/ItemListContainer";
 import ItemDetailContainer from "./componentes/ItemDetailContainerFolder/ItemDetailContainer";
-import Cart from "./pages/Cart";
+import Cart from "./componentes/Cart";
+import { CartProvider } from "./context/CartContext";
 
 const App = () => {
   return (
     <BrowserRouter>
+    <CartProvider>
       <NavBar />
 
       <Routes>
           <Route path="/" element={<ItemListContainer/>} />
 
+          <Route path="/category/:categoryId" element={<ItemListContainer />} />
+
           <Route path="/detail/:id" element={<ItemDetailContainer />} />
 
-          <Route path="/cart" element={<Cart/>} />
+          <Route path="/cart" element={<Cart />} /> 
+
+          <Route path="*" element={<h1>404 NOT FOUND</h1>}/>
         
         </Routes>
+        
       <Footer />
-
+      </CartProvider>
     </BrowserRouter>
   )
 }

@@ -1,6 +1,6 @@
 import { Container, Nav, Navbar as BNavbar } from "react-bootstrap";
-//import CartWidget from "./CartWidget"//
-import {  Link } from "react-router-dom";
+import CartWidget from "./CartWidget"
+import { NavLink, Link } from "react-router-dom";
 
 function Navbar() {
     return (
@@ -11,15 +11,17 @@ function Navbar() {
                         Mi Tienda
                     </BNavbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/category/1">
-                            1
+                        <Nav.Link as={Link} to="/category/Yoda">
+                            Yoda
                         </Nav.Link>
-                        <Nav.Link as={Link} to="/category/2">
-                            2
+                        <Nav.Link as={Link} to="/category/Darth Vader">
+                            Darth Vader
                         </Nav.Link>
-                        <Nav.Link as={Link} to="/category/3">
-                            3
+                        <Nav.Link as={Link} to="/category/Mando">
+                            Mando
                         </Nav.Link>
+                        <NavLink to="/cart" className="header__link link"><CartWidget /></NavLink>
+
                     </Nav>
                 </Container>
             </BNavbar>

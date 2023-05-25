@@ -22,7 +22,7 @@ html , body , #root {
   align-items: center;
   padding: 0 16px;
   height: 60px;
-  background: #1031ec;
+  background: #162475;
   color: #fff;
 }
 
@@ -69,7 +69,7 @@ html , body , #root {
 
 .footer {
   height: 60px;
-  background: #162475;
+  background: #000105;
   color: #fff;
   display: flex;
   justify-content: center;
