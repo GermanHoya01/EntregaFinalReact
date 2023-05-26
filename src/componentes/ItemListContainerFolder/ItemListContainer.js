@@ -1,39 +1,38 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
-import mock from "../../asyncMock";
 import ItemList from "./ItemList";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase"
 
 const ItemListContainer = ({ greeting }) => {
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
     const { categoryId } = useParams();
 
     useEffect(() => {
         setIsLoading(true);
 
-        function getProducts() {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(mock);
-                }, 2000);
-            });
-        }
+        const collectionRef = categoryId
+            ? query(collection(db, "products"), where("category", "==", categoryId))
+            : collection(db, "products");
 
-        getProducts(categoryId) //
-            .then((products) => {
-                if (categoryId) {
-                    setProducts(
-                        products.filter((product) => product.category === categoryId)
-                    );
-                } else {
-                    setProducts(products);
-                }
+        getDocs(collectionRef)
+            .then(response => {
+                const productsAdapted = response.docs.map(doc => {
+                    const data = doc.data();
+                    return { id: doc.id, ...data };
+                });
+                setProducts(productsAdapted);
+            })
+            .catch((error) => {
+                console.log(error);
             })
             .finally(() => {
                 setIsLoading(false);
             });
-    }, [categoryId]);
+    }, [categoryId]); 
 
     return (
         <div>
@@ -50,4 +49,3 @@ const ItemListContainer = ({ greeting }) => {
 };
 
 export default ItemListContainer;
-
